@@ -10,6 +10,7 @@ import {
 import { Button } from '../components/Button'
 import { EvilIcons } from '@expo/vector-icons'
 import { i18n } from '../translations'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 
 const styles = StyleSheet.create({
   scrollWrapper: {
@@ -163,6 +164,7 @@ const news = [
 ]
 
 export function Main () {
+  const footerHeight = useBottomTabBarHeight()
   return (
     <ScrollView style={styles.scrollWrapper}>
       <View style={styles.wrapper}>
@@ -201,7 +203,7 @@ export function Main () {
             <Text style={styles.loadMoreText}>Загрузить больше</Text>
           </Button>
         </View>
-        <View style={{ height: 60 }} />
+        <View style={{ height: footerHeight }} />
       </View>
     </ScrollView>
   )
