@@ -2,7 +2,7 @@ import * as Localization from 'expo-localization'
 import i18n from 'i18n-js'
 
 i18n.translations = {
-  'en-EN': {
+  en: {
     tours: {
       food: 'Food tour',
       metropol: 'Metropol tour',
