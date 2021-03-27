@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 
-const ip = '192.168.0.15'
+const ip = '10.0.4.100'
 
 export function Chat() {
   const [messages, setMessages] = useState([])
