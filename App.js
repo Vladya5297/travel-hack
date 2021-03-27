@@ -1,15 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import 'react-native-gesture-handler'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { Main } from './screens/main'
+import { Chat } from './screens/chat'
 import { Ionicons } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
 import { i18n } from './translations';
+import { Keyboard } from 'react-native'
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const [kbIsVisible, setKbIsVisible] = useState(false)
+
+  useEffect(() => {
+    const onShow = () => {
+      setKbIsVisible(true)
+    }
+    const onHide = () => {
+      setKbIsVisible(false)
+    }
+    Keyboard.addListener('keyboardDidShow', onShow)
+    Keyboard.addListener('keyboardDidHide', onHide)
+    return () => {
+      Keyboard.removeListener('keyboardDidShow', onShow)
+      Keyboard.addListener('keyboardDidHide', onHide)
+    }
+  }, [])
+
   return (
     <NavigationContainer>
       <Tab.Navigator tabBarOptions={{
@@ -17,9 +36,9 @@ export default function App() {
         inactiveTintColor: '#1c0f13',
         activeBackgroundColor: '#19401E',
         inactiveBackgroundColor: 'white',
-        tabStyle: { borderRadius: 10, padding: 10 },
+        tabStyle: { borderRadius: 10, padding: 5, margin: 5 },
         labelStyle: { fontSize: 15 },
-        style: { marginHorizontal: 20, borderRadius: 10, position: 'absolute', bottom: 5, height: 70 }
+        style: { marginHorizontal: 20, borderRadius: 15, position: 'absolute', bottom: kbIsVisible ? -100 : 5, height: 70 }
       }}>
         <Tab.Screen
           name="Main"
@@ -39,7 +58,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Chat"
-          component={Main}
+          component={Chat}
           options={{
             tabBarLabel: i18n.t('bottomBar.chat'),
             tabBarIcon: ({ color }) => <Ionicons name="chatbox-outline" size={24} color={color} />
