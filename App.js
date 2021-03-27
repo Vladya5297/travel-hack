@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { Main } from './screens/main'
 import { Chat } from './screens/chat'
+import { Services } from './screens/services'
 import { Ionicons } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
 import { i18n } from './translations';
@@ -50,7 +51,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Services"
-          component={Main}
+          component={Services}
           options={{
             tabBarLabel: i18n.t('bottomBar.services'),
             tabBarIcon: ({ color }) => <Feather name="grid" size={24} color={color} />

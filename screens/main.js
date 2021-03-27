@@ -11,6 +11,7 @@ import { Button } from '../components/Button'
 import { EvilIcons } from '@expo/vector-icons'
 import { i18n } from '../translations'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { news } from '../data/news'
 
 const styles = StyleSheet.create({
   scrollWrapper: {
@@ -135,34 +136,6 @@ const tours = [
   }
 ]
 
-const news = [
-  {
-    name: i18n.t('tours.food'),
-    description: 'lol',
-    img: require('../assets/food.png')
-  },
-  {
-    name: i18n.t('tours.metropol'),
-    description: 'lol',
-    img: require('../assets/metropol.png')
-  },
-  {
-    name: i18n.t('tours.cultural'),
-    description: 'lol',
-    img: require('../assets/cultural.png')
-  },
-  {
-    name: i18n.t('tours.water'),
-    description: 'lol',
-    img: require('../assets/water.png')
-  },
-  {
-    name: i18n.t('tours.joy'),
-    description: 'lol\nlol\nlol\nlol',
-    img: require('../assets/joy.png')
-  }
-]
-
 export function Main () {
   const footerHeight = useBottomTabBarHeight()
   return (
@@ -188,12 +161,12 @@ export function Main () {
         </ScrollView>
         <View style={styles.activityWrapper}>
           <Text style={styles.header}>{i18n.t('headers.activity')}</Text>
-          {news.map(({ name, description, img }) => (
-            <Button key={name} style={styles.cardWrapper}>
+          {news[i18n.locale].map(({ title, short, long, img }) => (
+            <Button key={title} style={styles.cardWrapper}>
               <Image source={img} style={styles.cardImage}/>
               <View style={styles.cardTextWrapper}>
-                <Text style={styles.cardName}>{name}</Text>
-                <Text style={styles.cardDescription}>{description}</Text>
+                <Text style={styles.cardName}>{title}</Text>
+                <Text style={styles.cardDescription}>{short}</Text>
               </View>
             </Button>
           ))}
