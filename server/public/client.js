@@ -1,8 +1,6 @@
-const ip = '10.0.4.100'
+const ip = '10.0.3.125'
 const ws = new WebSocket(`ws://${ip}:5000`)
 const messages = []
-
-
 
 ws.onmessage = ({ data }) => {
   const { initial, message } = JSON.parse(data)

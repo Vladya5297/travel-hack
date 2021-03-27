@@ -1,19 +1,8 @@
 const path = require('path')
 const WebSocket = require('ws')
 const { v4: uuidv4 } = require('uuid')
-const { createServer } = require('./createServer')
 
-const app = createServer(path.resolve(__dirname, './public'), 3000)
-
-const messages = [{
-  _id: uuidv4(),
-  text: 'Hello! How can I help you?',
-  createdAt: new Date(),
-  user: {
-    _id: 1,
-    name: 'Support'
-  }
-}]
+const messages = []
 
 const wss = new WebSocket.Server({ port: 5000 })
 // Подключаем библиотеку для работы с Telegram API в переменную
@@ -26,20 +15,13 @@ var token = '1745049044:AAFGx-9AyDi3P1v28SKMpLYrpI50uttlGfA';
 var bot = new TelegramBot(token, { polling: true });
 
 // Простая команда без параметров
-
-
-
-
 wss.on('connection', (ws) => {
   let stateAnswer = false
-  bot.on('callback_query', function (msg) {
-    var answer = msg.data // Делим ответ на две части, превратив в массив. Первый элемент номер вопроса, второй будет вариант ответа.
-    console.log(answer)
+  bot.on('callback_query', function () {
     stateAnswer = true;
   });
   bot.on('message', function (msg) { // Берем ID чата (не отправителя)
     var answer = msg.text; // Делим ответ на две части, превратив в массив. Первый элемент номер вопроса, второй будет вариант ответа.
-    console.log(answer)
     if(stateAnswer){
       const message = {
         _id: uuidv4(),
@@ -67,11 +49,6 @@ wss.on('connection', (ws) => {
     };
     bot.sendMessage(60206119, message.text, options);
     messages.unshift(message)
-    // wss.clients.forEach(client => {
-    //   if (client !== ws && client.readyState === WebSocket.OPEN) {
-    //     client.send(data);
-    //   }
-    // })
   })
 
   ws.send(JSON.stringify({ initial: true, message: messages }))

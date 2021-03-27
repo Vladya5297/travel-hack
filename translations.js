@@ -19,7 +19,8 @@ i18n.translations = {
       main: 'Main',
       services: 'Services',
       chat: 'Chat'
-    }
+    },
+    helloMessage: 'Hello! How can I help you?'
   },
   'ru-RU': {
     tours: {
@@ -38,7 +39,8 @@ i18n.translations = {
       main: 'Главная',
       services: 'Услуги',
       chat: 'Чат'
-    }
+    },
+    helloMessage: 'Здравствуйте! Чем я могу вам помочь?'
   }
 }
 

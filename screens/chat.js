@@ -2,11 +2,20 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Keyboard, View } from 'react-native'
 import { GiftedChat, Bubble, MessageText, Time } from 'react-native-gifted-chat'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { i18n } from '../translations'
 
-const ip = '10.0.4.100'
+const ip = '10.0.3.125'
 
 export function Chat() {
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([{
+    _id: 0,
+    text: i18n.t('helloMessage'),
+    createdAt: new Date(),
+    user: {
+      _id: 1,
+      name: 'Support'
+    }
+  }])
   const [text, setText] = useState('')
 
   const ws = useRef(new WebSocket(`ws://${ip}:5000`)).current
