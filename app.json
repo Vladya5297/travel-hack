@@ -20,12 +20,25 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.hack",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyAVwg7ufy8IxsdT3o89f4Tt30gyRmIeFlY",
+          "authDomain": "travelhack-faa06.firebaseapp.com",
+          "projectId": "travelhack-faa06",
+          "storageBucket": "travelhack-faa06.appspot.com",
+          "messagingSenderId": "206644148176",
+          "appId": "1:206644148176:web:5b6fd05e8ba64d15b9abd5",
+          "measurementId": "G-1YFP1EKNCL"
+        }
+      },
       "favicon": "./assets/favicon.png"
     }
   }

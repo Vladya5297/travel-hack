@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "206644148176",
+    "project_id": "travelhack-faa06",
+    "storage_bucket": "travelhack-faa06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206644148176:android:7bffd807fa1758cbb9abd5",
+        "android_client_info": {
+          "package_name": "com.hack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206644148176-5evatgun0qelickhsjloj1db995vdgt8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXWgv8SHBxZhvCZjcyIB8Fvf1Hhim1b70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206644148176-5evatgun0qelickhsjloj1db995vdgt8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
