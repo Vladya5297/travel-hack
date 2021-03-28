@@ -1,0 +1,12 @@
+{
+  "tour": {
+    "ru-RU": {
+      "name": "Art-тур",
+      "description": "Погружение в творческую атмосферу Москвы. Посещение ключевых точек притяжения представителей креативного Московского сообщества, мастер классы и творческие вечера с русской кухней дадут Вам море незабываемых эмоций и знакомств.\n\n1) Аукцион Modern Art\n2) Мастер класс: Русское искусство\n3) Выставка историческое наследие\n4) Ужин: традиционная русская кухня\n"
+    },
+    "en": {
+      "name": "Art tour",
+      "description": "Immersion in the creative atmosphere of Moscow. Visiting key points of attraction for representatives of the creative Moscow community, master classes and creative evenings with Russian cuisine will give you a sea of unforgettable emotions and acquaintances.\n\n1) Modern Art Auction\n2) Master class: Russian art\n3) Exhibition historical heritage\n4) Dinner: traditional Russian kitchen"
+    }
+  }
+}

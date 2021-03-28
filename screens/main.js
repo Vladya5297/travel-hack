@@ -15,6 +15,7 @@ import { news } from '../data/news'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { WebView } from 'react-native-webview'
+import { tour } from '../data/tour.json'
 
 const Stack = createStackNavigator()
 
@@ -24,7 +25,8 @@ export function Main () {
       headerShown: false
     }}>
         <Stack.Screen name="News" component={News} />
-        <Stack.Screen name="Item" component={Item} />
+        <Stack.Screen name="NewsItem" component={NewsItem} />
+        <Stack.Screen name="TourItem" component={TourItem} />
     </Stack.Navigator>
   )
 }
@@ -167,12 +169,17 @@ export function News () {
           <EvilIcons name="search" size={30} color="black" style={{ backgroundColor: 'white'}}/>
         </View>
         <ScrollView style={styles.toursWrapper} horizontal={true} fadingEdgeLength={20}>
-          {tours.map(({ name, img }) => (
-            <Button key={name} style={{ margin: 5 }}>
-              <Image style={styles.tourBackground} source={img}></Image>
-              <Text style={styles.tourText}>{name}</Text>
-            </Button>
-          ))}
+          {tours.map(({ name, img }) => {
+            const navigation = useNavigation()
+            return (
+              <Button key={name} style={{ margin: 5 }} onPress={() => {
+                navigation.navigate('TourItem')
+              }}>
+                <Image style={styles.tourBackground} source={img}></Image>
+                <Text style={styles.tourText}>{name}</Text>
+              </Button>
+              )
+          })}
         </ScrollView>
         <View style={styles.activityWrapper}>
           <Text style={styles.header}>{i18n.t('headers.activity')}</Text>
@@ -180,7 +187,7 @@ export function News () {
             const navigation = useNavigation()
             return (
               <Button key={title} style={styles.cardWrapper} onPress={() => {
-                navigation.navigate('Item', { title, img, long })
+                navigation.navigate('NewsItem', { title, img, long })
               }}>
                 <Image source={img} style={styles.cardImage}/>
                 <View style={styles.cardTextWrapper}>
@@ -202,18 +209,60 @@ export function News () {
   )
 }
 
-const stylesItem = StyleSheet.create({
+const stylesNewsItem = StyleSheet.create({
   itemImage: { width: 280, height: 200, alignSelf: 'center' }
 })
 
-export function Item () {
+export function NewsItem () {
   const { params } = useRoute()
   const ref = useRef()
   
   return (
     <View style={{ flex: 1 }}>
-      <Image style={stylesItem.itemImage} source={params.img} />
+      <Image style={stylesNewsItem.itemImage} source={params.img} />
       <WebView ref={ref} source={{ html: params.long }} style={{ marginTop: 20 }} />
     </View>
+  )
+}
+
+const stylesTourItem = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    paddingHorizontal: 25,
+    paddingVertical: 30
+  },
+  header: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  image: {
+    resizeMode: 'stretch',
+    width: 280,
+    height: 200,
+    alignSelf: 'center',
+    borderRadius: 8
+  },
+  description: {
+    marginTop: 10,
+    fontSize: 15
+  },
+  card: {
+    backgroundColor: 'white',
+    padding: 15,
+    borderRadius: 10
+  }
+})
+
+export function TourItem () {
+  const { name, description } = tour[i18n.currentLocale()]
+  return (
+    <ScrollView style={stylesTourItem.wrapper}>
+      <Text style={stylesTourItem.header}>{name}</Text>
+      <View style={stylesTourItem.card}>
+        <Image style={stylesTourItem.image} source={require('../assets/thebestimageintheworld.png')}/>
+        <Text style={stylesTourItem.description}>{description}</Text>
+      </View>
+    </ScrollView>
   )
 }

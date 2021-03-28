@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Animated, View, StyleSheet } from 'react-native'
 import { Dimensions } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -12,11 +13,12 @@ const styles = StyleSheet.create({
 })
 
 export function Start () {
-  const { height, width } = Dimensions.get('window')
+  const navigation = useNavigation()
+  const { width } = Dimensions.get('window')
 
   const logo = useRef(new Animated.Value(0)).current
-  const leftHand = useRef(new Animated.Value(0)).current
-  const rightHand = useRef(new Animated.Value(0)).current
+  const front = useRef(new Animated.Value(0)).current
+  const back = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
     Animated.parallel([
@@ -26,25 +28,27 @@ export function Start () {
         delay: 500,
         useNativeDriver: false
       }),
-      Animated.timing(leftHand, {
+      Animated.timing(front, {
         toValue: 1,
-        duration: 1000,
+        duration: 1300,
         delay: 500,
         useNativeDriver: false
       }),
-      Animated.timing(rightHand, {
+      Animated.timing(back, {
         toValue: 1,
-        duration: 1000,
+        duration: 1400,
         delay: 500,
         useNativeDriver: false
       })
-    ]).start()
+    ]).start(() => {
+      navigation.navigate('Application')
+    })
   }, [])
 
   return (
     <View style={styles.wrapper}>
       <Animated.Image
-        source={require('./assets/logo.png')}
+        source={require('../assets/logo.png')}
         style={StyleSheet.compose(styles.img, {
           left: (width / 2) - (163 / 2),
           top: logo.interpolate({
@@ -54,22 +58,24 @@ export function Start () {
         })}
       />
       <Animated.Image
-        source={require('./assets/lhand.png')}
+        source={require('../assets/front.png')}
         style={StyleSheet.compose(styles.img, {
-          top: (height / 2) - (40 / 2),
-          left: leftHand.interpolate({
+          height: 400,
+          width: 400,
+          bottom: front.interpolate({
             inputRange: [0, 1],
-            outputRange: [-190, 0]
+            outputRange: [-500, 0]
           })
         })}
       />
       <Animated.Image
-        source={require('./assets/rhand.png')}
+        source={require('../assets/backbuild.png')}
         style={StyleSheet.compose(styles.img, {
-          top: (height / 2) - (105 / 2),
-          right: rightHand.interpolate({
+          height: 450,
+          width: 400,
+          bottom: back.interpolate({
             inputRange: [0, 1],
-            outputRange: [-190, 0]
+            outputRange: [-500, -30]
           })
         })}
       />

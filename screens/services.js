@@ -28,9 +28,9 @@ const stylesCards = StyleSheet.create({
     paddingVertical: 30
   },
   grid: { flex: 1, flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
-  cardWrapper: { margin: 2 },
-  cardImage: { width: 150, height: 150 },
-  cardText: { position: 'absolute', top: 3, left: 3 },
+  cardWrapper: { margin: 7, borderRadius: 10 },
+  cardImage: { width: 140, height: 140, borderRadius: 10 },
+  cardText: { position: 'absolute', top: 5, left: 10, fontSize: 17 },
   header: {
     fontSize: 25,
     fontWeight: 'bold',
