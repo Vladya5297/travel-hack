@@ -20,7 +20,8 @@ i18n.translations = {
       services: 'Services',
       chat: 'Chat'
     },
-    helloMessage: 'Hello! How can I help you?'
+    helloMessage: 'Hello! How can I help you?',
+    loadMore: 'Load more'
   },
   'ru-RU': {
     tours: {
@@ -32,7 +33,7 @@ i18n.translations = {
     },
     headers: {
       main: 'Главная',
-      activity: 'Активности Москвы'
+      activity: 'Активности в Москве'
     },
     search: 'Поиск',
     bottomBar: {
@@ -40,7 +41,8 @@ i18n.translations = {
       services: 'Услуги',
       chat: 'Чат'
     },
-    helloMessage: 'Здравствуйте! Чем я могу вам помочь?'
+    helloMessage: 'Здравствуйте! Чем я могу вам помочь?',
+    loadMore: 'Загрузить больше'
   }
 }
 

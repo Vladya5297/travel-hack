@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {
   View,
   StyleSheet,
@@ -12,6 +12,22 @@ import { EvilIcons } from '@expo/vector-icons'
 import { i18n } from '../translations'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { news } from '../data/news'
+import { createStackNavigator } from '@react-navigation/stack'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { WebView } from 'react-native-webview'
+
+const Stack = createStackNavigator()
+
+export function Main () {
+  return (
+    <Stack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+        <Stack.Screen name="News" component={News} />
+        <Stack.Screen name="Item" component={Item} />
+    </Stack.Navigator>
+  )
+}
 
 const styles = StyleSheet.create({
   scrollWrapper: {
@@ -112,7 +128,6 @@ const styles = StyleSheet.create({
   }
 })
 
-
 const tours = [
   {
     name: i18n.t('tours.food'),
@@ -136,7 +151,7 @@ const tours = [
   }
 ]
 
-export function Main () {
+export function News () {
   const footerHeight = useBottomTabBarHeight()
   return (
     <ScrollView style={styles.scrollWrapper}>
@@ -161,23 +176,44 @@ export function Main () {
         </ScrollView>
         <View style={styles.activityWrapper}>
           <Text style={styles.header}>{i18n.t('headers.activity')}</Text>
-          {news[i18n.locale].map(({ title, short, long, img }) => (
-            <Button key={title} style={styles.cardWrapper}>
-              <Image source={img} style={styles.cardImage}/>
-              <View style={styles.cardTextWrapper}>
-                <Text style={styles.cardName}>{title}</Text>
-                <Text style={styles.cardDescription}>{short}</Text>
-              </View>
-            </Button>
-          ))}
+          {news[i18n.currentLocale()].map(({ title, short, long, img }) => {
+            const navigation = useNavigation()
+            return (
+              <Button key={title} style={styles.cardWrapper} onPress={() => {
+                navigation.navigate('Item', { title, img, long })
+              }}>
+                <Image source={img} style={styles.cardImage}/>
+                <View style={styles.cardTextWrapper}>
+                  <Text style={styles.cardName}>{title}</Text>
+                  <Text style={styles.cardDescription}>{short}</Text>
+                </View>
+              </Button>
+            )
+          })}
         </View>
         <View style={styles.loadMoreWrapper}>
           <Button  style={styles.loadMoreButton}>
-            <Text style={styles.loadMoreText}>Загрузить больше</Text>
+            <Text style={styles.loadMoreText}>{i18n.t('loadMore')}</Text>
           </Button>
         </View>
         <View style={{ height: footerHeight }} />
       </View>
     </ScrollView>
+  )
+}
+
+const stylesItem = StyleSheet.create({
+  itemImage: { width: 280, height: 200, alignSelf: 'center' }
+})
+
+export function Item () {
+  const { params } = useRoute()
+  const ref = useRef()
+  
+  return (
+    <View style={{ flex: 1 }}>
+      <Image style={stylesItem.itemImage} source={params.img} />
+      <WebView ref={ref} source={{ html: params.long }} style={{ marginTop: 20 }} />
+    </View>
   )
 }
