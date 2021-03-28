@@ -95,7 +95,7 @@ export function Service () {
             <Button style={stylesService.button} onPress={() => {
               Linking.openURL(url)
             }}>
-              <Text style={stylesService.buttonText}>Подробнее</Text>
+              <Text style={stylesService.buttonText}>{i18n.t('learnMore')}</Text>
             </Button>
           </View>
         </View>

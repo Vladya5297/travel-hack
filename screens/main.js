@@ -1,11 +1,12 @@
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
 import {
   View,
   StyleSheet,
   Text,
   ScrollView,
   TextInput,
-  Image
+  Image,
+  Switch
 } from 'react-native'
 import { Button } from '../components/Button'
 import { EvilIcons } from '@expo/vector-icons'
@@ -14,8 +15,8 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { news } from '../data/news'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { WebView } from 'react-native-webview'
 import { tour } from '../data/tour.json'
+import * as Linking from 'expo-linking'
 
 const Stack = createStackNavigator()
 
@@ -25,7 +26,6 @@ export function Main () {
       headerShown: false
     }}>
         <Stack.Screen name="News" component={News} />
-        <Stack.Screen name="NewsItem" component={NewsItem} />
         <Stack.Screen name="TourItem" component={TourItem} />
     </Stack.Navigator>
   )
@@ -51,10 +51,10 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold'
   },
-  VIP: {
+  toggle: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#B99F5E',
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5
@@ -130,46 +130,83 @@ const styles = StyleSheet.create({
   }
 })
 
-const tours = [
-  {
-    name: i18n.t('tours.food'),
-    img: require('../assets/food.png')
-  },
-  {
-    name: i18n.t('tours.metropol'),
-    img: require('../assets/metropol.png')
-  },
-  {
-    name: i18n.t('tours.cultural'),
-    img: require('../assets/cultural.png')
-  },
-  {
-    name: i18n.t('tours.water'),
-    img: require('../assets/water.png')
-  },
-  {
-    name: i18n.t('tours.joy'),
-    img: require('../assets/joy.png')
-  }
-]
+const tours = {
+  en: [
+    {
+      name: 'Food tour',
+      img: require('../assets/food.png')
+    },
+    {
+      name: 'Metropol tour',
+      img: require('../assets/metropol.png')
+    },
+    {
+      name: 'Cultural tour',
+      img: require('../assets/cultural.png')
+    },
+    {
+      name: 'Water tour',
+      img: require('../assets/water.png')
+    },
+    {
+      name: 'Joy tour',
+      img: require('../assets/joy.png')
+    }
+  ],
+  'ru-RU': [
+    {
+      name: 'Гастро тур',
+      img: require('../assets/food.png')
+    },
+    {
+      name: 'Метрополь тур',
+      img: require('../assets/metropol.png')
+    },
+    {
+      name: 'Светский тур',
+      img: require('../assets/cultural.png')
+    },
+    {
+      name: 'Водный тур',
+      img: require('../assets/water.png')
+    },
+    {
+      name: 'Развлекательный',
+      img: require('../assets/joy.png')
+    }
+  ]
+}
 
 export function News () {
   const footerHeight = useBottomTabBarHeight()
+  const [isEn, setIsEn] = useState(i18n.currentLocale() === 'en' ? true : false);
+  const toggleSwitch = () => setIsEn(previousState => { 
+    const newState = !previousState
+    i18n.locale = newState ? 'en' : 'ru-RU'
+    return newState
+  })
   return (
     <ScrollView style={styles.scrollWrapper}>
       <View style={styles.wrapper}>
         <View style={styles.headerWrapper}>
           <Text style={styles.header}>{i18n.t('headers.main')}</Text>
-          <Button style={styles.VIP}>
-            <Text style={StyleSheet.compose(styles.header, { color: 'white', fontSize: 15 })}>VIP</Text>
-          </Button>
+          <View style={styles.toggle}>
+            <Text>Ru</Text>
+            <Switch
+              trackColor={{ false: '#767577', true: '#767577' }}
+              thumbColor={'#f4f3f4'}
+              onValueChange={toggleSwitch}
+              value={isEn}
+            />
+            <Text>En</Text>
+          </View>
         </View>
         <View style={styles.searchWrapper}>
           <TextInput style={styles.search} placeholder={i18n.t('search') + '...'} />
           <EvilIcons name="search" size={30} color="black" style={{ backgroundColor: 'white'}}/>
         </View>
         <ScrollView style={styles.toursWrapper} horizontal={true} fadingEdgeLength={20}>
-          {tours.map(({ name, img }) => {
+          {tours[i18n.currentLocale()].map(({ name, img }) => {
             const navigation = useNavigation()
             return (
               <Button key={name} style={{ margin: 5 }} onPress={() => {
@@ -183,11 +220,10 @@ export function News () {
         </ScrollView>
         <View style={styles.activityWrapper}>
           <Text style={styles.header}>{i18n.t('headers.activity')}</Text>
-          {news[i18n.currentLocale()].map(({ title, short, long, img }) => {
-            const navigation = useNavigation()
+          {news[i18n.currentLocale()].map(({ title, short, url, img }) => {
             return (
               <Button key={title} style={styles.cardWrapper} onPress={() => {
-                navigation.navigate('NewsItem', { title, img, long })
+                Linking.openURL(url)
               }}>
                 <Image source={img} style={styles.cardImage}/>
                 <View style={styles.cardTextWrapper}>
@@ -206,22 +242,6 @@ export function News () {
         <View style={{ height: footerHeight }} />
       </View>
     </ScrollView>
-  )
-}
-
-const stylesNewsItem = StyleSheet.create({
-  itemImage: { width: 280, height: 200, alignSelf: 'center' }
-})
-
-export function NewsItem () {
-  const { params } = useRoute()
-  const ref = useRef()
-  
-  return (
-    <View style={{ flex: 1 }}>
-      <Image style={stylesNewsItem.itemImage} source={params.img} />
-      <WebView ref={ref} source={{ html: params.long }} style={{ marginTop: 20 }} />
-    </View>
   )
 }
 

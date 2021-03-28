@@ -3,13 +3,6 @@ import i18n from 'i18n-js'
 
 i18n.translations = {
   en: {
-    tours: {
-      food: 'Food tour',
-      metropol: 'Metropol tour',
-      cultural: 'Cultural tour',
-      water: 'Water tour',
-      joy: 'Joy tour'
-    },
     headers: {
       main: 'Main',
       activity: 'Activities of Moscow'
@@ -21,16 +14,10 @@ i18n.translations = {
       chat: 'Chat'
     },
     helloMessage: 'Hello! How can I help you?',
-    loadMore: 'Load more'
+    loadMore: 'Load more',
+    learnMore: 'Learn more'
   },
   'ru-RU': {
-    tours: {
-      food: 'Гастро тур',
-      metropol: 'Метрополь тур',
-      cultural: 'Светский тур',
-      water: 'Водный тур',
-      joy: 'Развлекательный'
-    },
     headers: {
       main: 'Главная',
       activity: 'Активности в Москве'
@@ -42,7 +29,8 @@ i18n.translations = {
       chat: 'Чат'
     },
     helloMessage: 'Здравствуйте! Чем я могу вам помочь?',
-    loadMore: 'Загрузить больше'
+    loadMore: 'Загрузить больше',
+    learnMore: 'Подробнее'
   }
 }
 

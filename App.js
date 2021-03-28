@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import 'react-native-gesture-handler'
+import { i18n } from './translations'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { Main } from './screens/main'
@@ -7,7 +8,6 @@ import { Chat } from './screens/chat'
 import { Services } from './screens/services'
 import { Ionicons } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
-import { i18n } from './translations';
 import { Keyboard } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Start } from './screens/start'
@@ -71,6 +71,9 @@ function Application () {
 const Stack = createStackNavigator()
 
 export default function App() {
+  useEffect(() => {
+    console.log('heh')
+  }, [i18n.locale])
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{

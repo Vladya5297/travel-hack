@@ -41,7 +41,7 @@ export function Start () {
         useNativeDriver: false
       })
     ]).start(() => {
-      navigation.navigate('Application')
+      navigation.replace('Application')
     })
   }, [])
 
