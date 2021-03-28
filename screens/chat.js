@@ -4,7 +4,7 @@ import { GiftedChat, Bubble, MessageText, Time } from 'react-native-gifted-chat'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { i18n } from '../translations'
 
-const ip = '10.0.3.125'
+const ip = '10.0.4.100'
 
 export function Chat() {
   const [messages, setMessages] = useState([{
@@ -23,10 +23,13 @@ export function Chat() {
   useEffect(() => {
     ws.onmessage = ({ data }) => {
       const { initial, message } = JSON.parse(data)
-      setMessages(messages => initial ? message : [message, ...messages])
+      if (initial && message.length) {
+        setMessages(message)
+      } else if (!Array.isArray(message)) {
+        setMessages(messages => [message, ...messages])
+      }
     }
   }, [])
-
   const onSend = ([message]) => {
     setMessages(messages => [message, ...messages])
     ws.send(JSON.stringify({ message }))
