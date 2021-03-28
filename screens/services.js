@@ -30,15 +30,21 @@ const stylesCards = StyleSheet.create({
   grid: { flex: 1, flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
   cardWrapper: { margin: 2 },
   cardImage: { width: 150, height: 150 },
-  cardText: { position: 'absolute', top: 3, left: 3 }
+  cardText: { position: 'absolute', top: 3, left: 3 },
+  header: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
 })
 
 export function Cards () {
   const footerHeight = useBottomTabBarHeight()
   return (
     <View style={stylesCards.wrapper}>
+      <Text style={stylesCards.header}>{i18n.t('bottomBar.services')}</Text>
       <View style={stylesCards.grid}>
-        {services[i18n.locale].map(({ name, img, data }) => {
+        {services[i18n.currentLocale()].map(({ name, img, data }) => {
           const navigation = useNavigation()
           return (
             <Button key={name} style={stylesCards.cardWrapper} onPress={() => {
